@@ -12,7 +12,9 @@ def call(body) {
     println config.prodDeployTargets.toString()
     
     if (env.BRANCH_NAME != "master") {
+        println "About to run tests:"
         if (!SKIP_TEST) {
+            println "Running tests..."
             test(TEST_NODE)
         }
     } else {
