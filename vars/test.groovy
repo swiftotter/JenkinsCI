@@ -1,4 +1,5 @@
 def call(String nodeName = 'test', String composerAuth = 'unset') {
+    println "Beginning test runner"
     def testFunctions = new org.swiftotter.TestFunctions()
     
     node (nodeName) {
@@ -12,7 +13,9 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
                 sh 'git clone https://github.com/SwiftOtter/Magento1CI.git scripts'
 
                 sh 'sudo chmod --recursive +x scripts/'
-                sh 'scripts/test.sh'+' -i '+env.BUILD_NUMBER+' -c '+env.CRYPT_KEY+' -t '+env.TABLE_PREFIX+' -b '+env.BUCKET+' -p . -f '+env.S3_FILE
+                withCredentials(CRYPT_KEY, 'CRYPT_KEY') {
+                    sh 'scripts/test.sh'+' -i '+env.BUILD_NUMBER+' -c '+CRYPT_KEY+' -t '+TABLE_PREFIX+' -b '+S3_DB_BUCKET+' -p . -f '+S3_DB_FILE
+                }
             }
 
             stage('\u2795 Pushing Artifacts') {
