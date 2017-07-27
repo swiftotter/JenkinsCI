@@ -13,7 +13,7 @@ def call(body) {
     
     if (env.BRANCH_NAME != "master") {
         println "About to run tests:"
-        if (!SKIP_TEST) {
+        if (!binding.variables['SKIP_TEST'] || SKIP_TEST != TRUE) {
             println "Running tests..."
             test(TEST_NODE)
         }
