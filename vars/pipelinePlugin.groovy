@@ -17,7 +17,7 @@ def call(body) {
         }
     } else {
         milestone 1
-        //build(BUILD_NODE)
+        build(BUILD_NODE)
         milestone 2
         println SKIP_DEV_DEPLOY.toString()
         if (SKIP_DEV_DEPLOY != true && config.devDeployTargets) {
