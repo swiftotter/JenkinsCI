@@ -61,7 +61,7 @@ def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String bu
 
     node (nodeName) {
         sh 'rm -f *.tar.gz'
-        sh 'aws s3 cp s3://' + s3BucketName + '/jobs/' + buildName + '/' + '78' /*buildNumber*/ + '/' + outputFile + ' ' + buildFile
+        sh 'aws s3 cp s3://' + s3BucketName + '/jobs/' + buildName + '/' + buildNumber + '/' + outputFile + ' ' + buildFile
     }
     
     println("Build File: " + buildFile)
