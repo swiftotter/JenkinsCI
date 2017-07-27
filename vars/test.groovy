@@ -1,11 +1,8 @@
 def call(String nodeName = 'test', String composerAuth = 'unset') {
-    def utilities = new org.swiftotter.TestFunctions()
+    def testFunctions = new org.swiftotter.TestFunctions()
     
     node (nodeName) {
         withEnv(["COMPOSER_AUTH=" + composerAuth]) {
-            milestone 1
-            def testPath = env.BUILD_NUMBER
-
             stage ('\u26CF Checkout') {
                 checkout scm
             }
@@ -24,8 +21,6 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
             }
         }
 
-        test.updateGithubCommitStatus(currentBuild);
+        testFunctions.updateGithubCommitStatus(currentBuild);
     }
-
-    milestone 2
 }
