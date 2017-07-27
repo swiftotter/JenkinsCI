@@ -39,14 +39,6 @@ def deploy(
 
     pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber)
     deployArtifactOnServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber)
-
-    def userHost = sshUser + '@' + sshHost
-    def releaseFolder = 'releases/build-' + buildNumber
-
-    executeInNode(nodeName, sshKey) {
-        sh 'chmod 600 ${SSH_KEY}'
-        sh 'scp -i ${SSH_KEY} -o StrictHostKeyChecking=no -o \'CompressionLevel 9\' -o \'IPQoS throughput\' -c arcfour ' + buildFile + ' ' + userHost + ':' + sshPath + '/releases/' + buildFile
-    }
 }
 
 def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String buildName, String buildNumber, String outputFile) {
