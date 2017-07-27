@@ -1,5 +1,5 @@
 def call(String nodeName = 'test', String composerAuth = 'unset') {
-    def utilities = new org.swiftotter.Test()
+    def utilities = new org.swiftotter.TestFunctions()
     
     node (nodeName) {
         withEnv(["COMPOSER_AUTH=" + composerAuth]) {
