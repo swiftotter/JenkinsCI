@@ -13,25 +13,25 @@ def call(body) {
     
     if (env.BRANCH_NAME != "master") {
         println "About to run tests:"
-        if (!binding.variables['SKIP_TEST'] || SKIP_TEST != TRUE) {
+        if (!binding.variables['SKIP_TEST'] || params.SKIP_TEST != TRUE) {
             println "Running tests..."
-            test(TEST_NODE)
+            test(params.TEST_NODE)
         }
     } else {
         milestone 1
-        build(BUILD_NODE)
+        build(params.BUILD_NODE)
         milestone 2
-        println SKIP_DEV_DEPLOY.toString()
-        if (SKIP_DEV_DEPLOY != true && config.devDeployTargets) {
+        println params.SKIP_DEV_DEPLOY.toString()
+        if (params.SKIP_DEV_DEPLOY != true && config.devDeployTargets) {
             println "Deploying to DEV"
             deploy(DEPLOY_NODE, 'dev', config.devDeployTargets)
         }
         milestone 3
         def approval = input(message: 'OK to push to production?', ok: 'Yes, push to production.')
         milestone 4
-        if (SKIP_PROD_DEPLOY != true && config.prodDeployTargets) {
+        if (params.SKIP_PROD_DEPLOY != true && config.prodDeployTargets) {
             println "Deploying to PROD"
-            deploy(DEPLOY_NODE, 'prod', config.prodDeployTargets)   
+            deploy(params.DEPLOY_NODE, 'prod', config.prodDeployTargets)   
         }
     }    
 }
