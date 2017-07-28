@@ -27,6 +27,6 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
             }
         }
 
-        testFunctions.updateGithubCommitStatus(currentBuild);
+        // testFunctions.updateGithubCommitStatus(currentBuild);
     }
 }
