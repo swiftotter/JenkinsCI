@@ -13,14 +13,14 @@ def call(body) {
     
     if (env.BRANCH_NAME != "master") {
         println "About to run tests:"
-        if (!binding.variables['SKIP_TEST'] || params.SKIP_TEST != TRUE) {
+        if (!binding.variables['SKIP_TEST'] || params.SKIP_TEST != true) {
             println "Running tests..."
             test(params.TEST_NODE)
         }
     } else {
         milestone 1
         println 'STANDARDIZED: ' + config.standardized
-        if (!config.standardized || config.standardized != TRUE) {
+        if (!config.standardized || config.standardized != true) {
             build(params.BUILD_NODE)
         } else {
             standardizedBuild(params.BUILD_NODE)   
