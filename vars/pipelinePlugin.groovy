@@ -19,7 +19,11 @@ def call(body) {
         }
     } else {
         milestone 1
-        build(params.BUILD_NODE)
+        if (!binding.variables["STANDARDIZED"] || params.STANDARDIZED != 1) {
+            build(params.BUILD_NODE)
+        } else {
+            standardizedBuild(params.BUILD_NODE)   
+        }
         milestone 2
         println params.SKIP_DEV_DEPLOY.toString()
         if (params.SKIP_DEV_DEPLOY != true && config.devDeployTargets) {
