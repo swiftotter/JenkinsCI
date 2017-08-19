@@ -19,7 +19,7 @@ def call(body) {
         }
     } else {
         milestone 1
-        println 'STANDARDIZED: ' + params.STANDARIZED
+        println 'STANDARDIZED: ' + binding.variables["STANDARDIZED"]
         if (!binding.variables["STANDARDIZED"] || params.STANDARDIZED != '1') {
             build(params.BUILD_NODE)
         } else {
