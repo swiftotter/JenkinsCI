@@ -11,6 +11,7 @@ def call(body) {
         string(name: 'BUILD_FILE', defaultValue: 'build' + env.BUILD_NUMBER + '.tar.gz', description: 'Artifact file name'),
         string(name: 'S3_DEST_BUCKET', defaultValue: 'swiftotter-builds', description: 'The AWS S3 bucket to send the build artifacts to.'),
 
+        booleanParam(name: 'STANDARDIZED', defaultValue: false, description: 'Use standarized CI system?'),
         booleanParam(name: 'SKIP_TEST', defaultValue: false, description: 'Whether or not to skip test runner.'),
         booleanParam(name: 'SKIP_DEV_DEPLOY', defaultValue: false, description: 'Whether or not to skip DEV deployment.'),
         booleanParam(name: 'SKIP_PROD_DEPLOY', defaultValue: false, description: 'Whether or not to skip PROD deployment.'),
