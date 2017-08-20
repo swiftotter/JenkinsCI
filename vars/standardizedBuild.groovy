@@ -19,7 +19,7 @@ def call(String nodeName = 'build') {
                     sh 'sudo chmod --recursive +x scripts/'
 
                     env.PATH = "./scripts:${env.PATH}"
-                    sh 'build.sh --magentoVersion=2.1 --theme=flow --buildId=' + BUILD_NUMBER
+                    sh 'build.sh --magentoVersion=2.1 --theme=' + params.THEME + ' --buildId=' + BUILD_NUMBER
                 }
             }
         }
