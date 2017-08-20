@@ -7,6 +7,7 @@ def deployWithDetails(
     String buildName,
     String buildNumber,
     String outputFile,
+    String magentoVersion,
     Map details
 ) {
     println nodeName
@@ -19,7 +20,8 @@ def deployWithDetails(
            details.sshHost,
            details.sshKey,
            details.sshPath,
-           outputFile
+           outputFile,
+           magentoVersion
     )
 }
 
@@ -33,12 +35,13 @@ def deploy(
     String sshHost,
     String sshKey,
     String sshPath,
-    String outputFile
+    String outputFile,
+    String magentoVersion
 ) {
     buildFile = downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
 
     pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber)
-    deployArtifactOnServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber)
+    deployArtifactOnServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber, magentoVersion)
 }
 
 def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String buildName, String buildNumber, String outputFile) {
@@ -70,7 +73,7 @@ def pushArtifactToDeployServer(String nodeName = 'deploy', String sshUser, Strin
     }
 }
 
-def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshKey, String sshPath, String buildFile, String buildNumber) {
+def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshKey, String sshPath, String buildFile, String buildNumber, magentoVersion) {
     def userHost = sshUser + '@' + sshHost
     def releaseFolder = 'releases/build-' + buildNumber
 
@@ -80,7 +83,7 @@ def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String ss
             'cd ' + sshPath + '\n' +
             'mkdir -p ' + releaseFolder + '\n' +
             'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' -C ' + sshPath + '/' + releaseFolder + '\n' +
-                './'+releaseFolder+'/scripts/deploy.sh -b ' + buildNumber + '\n' +
+            './'+releaseFolder+'/scripts/deploy.sh --build=' + buildNumber + ' --magentoVersion=' + magentoVersion + '\n' +
             'EOF'
     }
 }
