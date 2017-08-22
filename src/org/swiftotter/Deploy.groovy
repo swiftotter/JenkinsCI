@@ -84,7 +84,7 @@ def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String ss
             'cd ' + sshPath + '\n' +
             'mkdir -p ' + releaseFolder + '\n' +
             'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' -C ' + sshPath + '/' + releaseFolder + '\n' +
-            './'+releaseFolder+'/scripts/deploy.sh --build=' + buildNumber + ' --magentoVersion=' + magentoVersion + '\n' +
+            './'+releaseFolder+'/scripts/deploy.sh --build ' + buildNumber + ' --magentoVersion ' + magentoVersion + '\n' +
             'EOF'
     }
 }
