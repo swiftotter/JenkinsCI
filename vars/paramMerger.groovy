@@ -23,5 +23,7 @@ def call(body) {
         string(name: 'DEPLOY_NODE', defaultValue: 'deploy', description: 'Node from which to deploy. Ideally, this is always on and assigned a static IP address.'),
     ]
     
+    println "Before merging parameters"
+    
     return utilities.mergeParameters(config.parameters ?: [], defaultParams)
 }
