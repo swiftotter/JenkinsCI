@@ -25,5 +25,18 @@ def call(body) {
     
     println "Before merging parameters"
     
-    return utilities.mergeParameters(config.parameters ?: [], defaultParams)
+    //return utilities.mergeParameters(config.parameters ?: [], defaultParams)
+    
+    def newParams = config.parameters ?: [];
+    
+    defaultParams.each { param ->
+          println param.toString();
+          def value = newParams.findResult { it.getArguments().name == param.getArguments().name }
+          println value.toString();
+          if (!value) {
+              newParams.addAll([ param ]);
+          }
+      }
+    
+    return newParams
 }
