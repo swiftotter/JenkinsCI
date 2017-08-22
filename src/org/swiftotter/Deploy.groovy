@@ -33,6 +33,7 @@ def deploy(
     String buildNumber,
     String sshUser,
     String sshHost,
+    String sshPort,
     String sshKey,
     String sshPath,
     String outputFile,
@@ -40,8 +41,8 @@ def deploy(
 ) {
     buildFile = downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
 
-    pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber)
-    deployArtifactOnServer(nodeName, sshUser, sshHost, sshKey, sshPath, buildFile, buildNumber, magentoVersion)
+    pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
+    deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber, magentoVersion)
 }
 
 def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String buildName, String buildNumber, String outputFile) {
@@ -64,22 +65,22 @@ def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String bu
     return buildFile
 }
 
-def pushArtifactToDeployServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshKey, String sshPath, String buildFile, String buildNumber) {
+def pushArtifactToDeployServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshPort, String sshKey, String sshPath, String buildFile, String buildNumber) {
     def userHost = sshUser + '@' + sshHost
     def releaseFolder = 'releases/build-' + buildNumber
 
     executeInNode(nodeName, sshKey) { SSH_KEY ->
-        sh 'scp -i ${SSH_KEY} -o StrictHostKeyChecking=no -o \'CompressionLevel 9\' -o \'IPQoS throughput\' -c arcfour ' + buildFile + ' ' + userHost + ':' + sshPath + '/releases/' + buildFile
+        sh 'scp -i ${SSH_KEY} -p ' + sshPort + ' -o StrictHostKeyChecking=no -o \'CompressionLevel 9\' -o \'IPQoS throughput\' -c arcfour ' + buildFile + ' ' + userHost + ':' + sshPath + '/releases/' + buildFile
     }
 }
 
-def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshKey, String sshPath, String buildFile, String buildNumber, magentoVersion) {
+def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshPort, String sshKey, String sshPath, String buildFile, String buildNumber, magentoVersion) {
     def userHost = sshUser + '@' + sshHost
     def releaseFolder = 'releases/build-' + buildNumber
 
     executeInNode(nodeName, sshKey) { SSH_KEY ->
         println SSH_KEY
-        sh 'ssh -i ${SSH_KEY} ' + userHost + ' << EOF\n' +
+        sh 'ssh -i ${SSH_KEY} -p ' + sshPort + ' + userHost + ' << EOF\n' +
             'cd ' + sshPath + '\n' +
             'mkdir -p ' + releaseFolder + '\n' +
             'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' -C ' + sshPath + '/' + releaseFolder + '\n' +
