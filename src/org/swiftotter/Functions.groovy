@@ -2,6 +2,7 @@ package org.swiftotter;
 
 class Functions implements Serializable {
     def mergeParameters(ArrayList newParams, ArrayList defaultParams) {
+      println "Merging parameters..."
       defaultParams.each { param ->
           println param.toString();
           def value = newParams.findResult { it.getArguments().name == param.getArguments().name }
