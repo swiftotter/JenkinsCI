@@ -7,6 +7,9 @@ def call(body) {
     def utilities = new org.swiftotter.Functions()
     
     def defaultParams = [
+        string(name: 'DEV_SSH_PORT', defaultValue: '22', description: 'SSH port for the DEV server.'),
+        string(name: 'PROD_SSH_PORT', defaultValue: '22', description: 'SSH port for the PROD server.'),
+        
         string(name: 'OUTPUT_FILE', defaultValue: 'build.tar.gz', description: 'Output file name (deployment, downloading from AWS)'),
         string(name: 'BUILD_FILE', defaultValue: 'build' + env.BUILD_NUMBER + '.tar.gz', description: 'Artifact file name'),
         string(name: 'S3_DEST_BUCKET', defaultValue: 'swiftotter-builds', description: 'The AWS S3 bucket to send the build artifacts to.'),
