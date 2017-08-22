@@ -31,7 +31,12 @@ def call(body) {
     
     defaultParams.each { param ->
           println param.toString();
-          def value = newParams.findResult { it.getArguments().name == param.getArguments().name }
+          def value = newParams.findResult { 
+              println "it.getArguments.name = " + it.getArguments().name
+              println "param.getArguments.name = " + param.getArguments().name
+              
+              it.getArguments().name == param.getArguments().name }
+        
           println value.toString();
           if (!value) {
               newParams.addAll([ param ]);
