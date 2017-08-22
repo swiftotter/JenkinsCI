@@ -18,7 +18,6 @@ def call(body) {
         string(name: 'TEST_NODE', defaultValue: 'test', description: 'Node to run tests on. Ideally, this is always on.'),
         string(name: 'BUILD_NODE', defaultValue: 'm2-build', description: 'Node on which to build. This is usually best as a larger AWS instance, and can be started on demand.'),
         string(name: 'DEPLOY_NODE', defaultValue: 'deploy', description: 'Node from which to deploy. Ideally, this is always on and assigned a static IP address.'),
-        string(name: 'MAGENTO_VERSION', defaultValue: '2.1', description: 'Version of Magento being built.')
     ]
     
     return utilities.mergeParameters(config.parameters ?: [], defaultParams)
