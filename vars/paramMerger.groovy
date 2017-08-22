@@ -35,7 +35,7 @@ def call(body) {
               println "it.getArguments.name = " + it.getArguments().name
               println "param.getArguments.name = " + param.getArguments().name
               
-              it.getArguments().name == param.getArguments().name }
+              return it.getArguments().name == param.getArguments().name }
         
           println value.toString();
           if (!value) {
