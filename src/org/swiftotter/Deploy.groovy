@@ -92,9 +92,7 @@ def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String ss
 def executeInNode(String nodeName = 'deploy', String sshKey, Closure whatToDo) {
     node (nodeName) {
         timeout(time: 15, unit: 'MINUTES') {
-            println sshKey
             withCredentials([file(credentialsId: sshKey, variable: 'SSH_KEY')]) {
-                println SSH_KEY
                 sh 'chmod 600 ${SSH_KEY}'
                 whatToDo(SSH_KEY)
             }
