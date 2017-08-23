@@ -10,7 +10,11 @@ def deployWithDetails(
     String magentoVersion,
     Map details
 ) {
-    println nodeName
+    println("Node Name: " + nodeName);
+    println("Environment: " + environment);
+    println("S3 Bucket Name: " + s3BucketName);
+    println("Build Name: " + buildName);
+    println("Build Number: " + buildNumber);
     deploy(nodeName,
            environment,
            s3BucketName,
@@ -39,6 +43,12 @@ def deploy(
     String outputFile,
     String magentoVersion
 ) {
+    println("Node Name: " + nodeName);
+    println("Environment: " + environment);
+    println("S3 Bucket Name: " + s3BucketName);
+    println("Build Name: " + buildName);
+    println("Build Number: " + buildNumber);
+    
     buildFile = downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
 
     pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
