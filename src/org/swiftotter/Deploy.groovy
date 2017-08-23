@@ -30,7 +30,7 @@ def deployWithDetails(
 }
 
 def deploy(
-    String nodeName = 'deploy',
+    String nodeName,
     String environment,
     String s3BucketName, 
     String buildName,
