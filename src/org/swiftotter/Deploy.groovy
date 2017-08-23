@@ -80,7 +80,7 @@ package org.swiftotter
         def releaseFolder = 'releases/build-' + buildNumber
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
-            sh 'scp -i ${SSH_KEY} -p ' + sshPort + ' -o StrictHostKeyChecking=no -o \'CompressionLevel 9\' -o \'IPQoS throughput\' -c arcfour ' + buildFile + ' ' + userHost + ':' + sshPath + '/releases/' + buildFile
+            sh 'scp -i ${SSH_KEY} -P ' + sshPort + ' -o StrictHostKeyChecking=no -o \'CompressionLevel 9\' -o \'IPQoS throughput\' -c arcfour ' + buildFile + ' ' + userHost + ':' + sshPath + '/releases/' + buildFile
         }
     }
 
