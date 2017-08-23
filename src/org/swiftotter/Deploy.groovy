@@ -17,7 +17,20 @@ class Deploy implements Serializable {
         println("S3 Bucket Name: " + inputS3BucketName);
         println("Build Name: " + inputBuildName);
         println("Build Number: " + inputBuildNumber);
-        this.deployBuild(inputNodeName, inputEnvironment, inputS3BucketName, inputBuildName, inputBuildNumber, details.sshUser, details.sshHost, details.sshKey, details.sshPath, inputOutputFile, inputMagentoVersion)
+        this.deployBuild(
+            inputNodeName,
+            inputEnvironment,
+            inputS3BucketName,
+            inputBuildName,
+            inputBuildNumber,
+            details.sshUser,
+            details.sshHost,
+            details.sshPort,
+            details.sshKey,
+            details.sshPath,
+            inputOutputFile,
+            inputMagentoVersion
+        )
     }
 
     def deployBuild(
