@@ -53,6 +53,10 @@ def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String bu
     }
     
     println("Job Name: " + jobName);
+    println("Node Name: " + nodeName);
+    println("S3 Bucket Name: " + s3BucketName);
+    println("Build Name: " + buildName);
+    println("Build Number: " + buildNumber);
     def buildFile = jobName + '-' + buildNumber.toString() + '.tar.gz'
 
     node (nodeName) {
