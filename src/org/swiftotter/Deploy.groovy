@@ -17,7 +17,7 @@ class Deploy implements Serializable {
         println("S3 Bucket Name: " + inputS3BucketName);
         println("Build Name: " + inputBuildName);
         println("Build Number: " + inputBuildNumber);
-        deployBuild(inputNodeName, inputEnvironment, inputS3BucketName, inputBuildName, inputBuildNumber, details.sshUser, details.sshHost, details.sshKey, details.sshPath, inputOutputFile, inputMagentoVersion)
+        this.deployBuild(inputNodeName, inputEnvironment, inputS3BucketName, inputBuildName, inputBuildNumber, details.sshUser, details.sshHost, details.sshKey, details.sshPath, inputOutputFile, inputMagentoVersion)
     }
 
     def deployBuild(
@@ -34,10 +34,10 @@ class Deploy implements Serializable {
         String outputFile,
         String magentoVersion
     ) {
-        buildFile = downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
+        buildFile = this.downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
 
-        pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
-        deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber, magentoVersion)
+        this.pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
+        this.deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber, magentoVersion)
     }
 
     def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String buildName, String buildNumber, String outputFile) {
