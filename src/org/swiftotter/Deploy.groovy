@@ -10,12 +10,12 @@ def deployWithDetails(
     String inputMagentoVersion,
     Map details
 ) {
-    println("Node Name: " + nodeName);
-    println("Environment: " + environment);
-    println("S3 Bucket Name: " + s3BucketName);
-    println("Build Name: " + buildName);
-    println("Build Number: " + buildNumber);
-    deploy(inputNodeName,
+    println("Node Name: " + inputNodeName);
+    println("Environment: " + inputEnvironment);
+    println("S3 Bucket Name: " + inputS3BucketName);
+    println("Build Name: " + inputBuildName);
+    println("Build Number: " + inputBuildNumber);
+    deployBuild(inputNodeName,
            inputEnvironment,
            inputS3BucketName,
            inputBuildName,
@@ -29,7 +29,7 @@ def deployWithDetails(
     )
 }
 
-def deploy(
+def deployBuild(
     String nodeName,
     String environment,
     String s3BucketName, 
