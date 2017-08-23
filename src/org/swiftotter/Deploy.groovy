@@ -1,13 +1,13 @@
 package org.swiftotter
 
 def deployWithDetails(
-    String nodeName = 'deploy',
-    String environment,
-    String s3BucketName,
-    String buildName,
-    String buildNumber,
-    String outputFile,
-    String magentoVersion,
+    String inputNodeName,
+    String inputEnvironment,
+    String inputS3BucketName,
+    String inputBuildName,
+    String inputBuildNumber,
+    String inputOutputFile,
+    String inputMagentoVersion,
     Map details
 ) {
     println("Node Name: " + nodeName);
@@ -15,17 +15,17 @@ def deployWithDetails(
     println("S3 Bucket Name: " + s3BucketName);
     println("Build Name: " + buildName);
     println("Build Number: " + buildNumber);
-    deploy(nodeName,
-           environment,
-           s3BucketName,
-           buildName,
-           buildNumber,
+    deploy(inputNodeName,
+           inputEnvironment,
+           inputS3BucketName,
+           inputBuildName,
+           inputBuildNumber,
            details.sshUser,
            details.sshHost,
            details.sshKey,
            details.sshPath,
-           outputFile,
-           magentoVersion
+           inputOutputFile,
+           inputMagentoVersion
     )
 }
 
