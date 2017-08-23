@@ -15,23 +15,12 @@ def deployWithDetails(
     println("S3 Bucket Name: " + inputS3BucketName);
     println("Build Name: " + inputBuildName);
     println("Build Number: " + inputBuildNumber);
-    deployBuild(inputNodeName,
-           inputEnvironment,
-           inputS3BucketName,
-           inputBuildName,
-           inputBuildNumber,
-           details.sshUser,
-           details.sshHost,
-           details.sshKey,
-           details.sshPath,
-           inputOutputFile,
-           inputMagentoVersion
-    )
+    deployBuild(inputNodeName, inputEnvironment, inputS3BucketName, inputBuildName, inputBuildNumber, details.sshUser, details.sshHost, details.sshKey, details.sshPath, inputOutputFile, inputMagentoVersion)
 }
 
 def deployBuild(
     String nodeName,
-    String environment,
+    String environmentName,
     String s3BucketName, 
     String buildName,
     String buildNumber,
@@ -44,7 +33,7 @@ def deployBuild(
     String magentoVersion
 ) {
     println("Node Name: " + nodeName);
-    println("Environment: " + environment);
+    println("Environment: " + environmentName);
     println("S3 Bucket Name: " + s3BucketName);
     println("Build Name: " + buildName);
     println("Build Number: " + buildNumber);
