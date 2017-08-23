@@ -1,7 +1,5 @@
 package org.swiftotter
 
-class Deploy implements Serializable {
-
     def deployWithDetails(
         String inputNodeName,
         String inputEnvironment,
@@ -111,5 +109,3 @@ class Deploy implements Serializable {
             }
         }
     }
-
-}
