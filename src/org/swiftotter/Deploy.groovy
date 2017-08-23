@@ -90,7 +90,7 @@ package org.swiftotter
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
             println SSH_KEY
-            sh 'ssh -i ${SSH_KEY} -p ' + sshPort + userHost + ' << EOF\n' +
+            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + userHost + ' << EOF\n' +
                 'cd ' + sshPath + '\n' +
                 'mkdir -p ' + releaseFolder + '\n' +
                 'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' -C ' + sshPath + '/' + releaseFolder + '\n' +
