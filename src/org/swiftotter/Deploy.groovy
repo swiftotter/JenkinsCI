@@ -10,11 +10,6 @@ package org.swiftotter
         String inputMagentoVersion,
         Map details
     ) {
-        println("Node Name: " + inputNodeName);
-        println("Environment: " + inputEnvironment);
-        println("S3 Bucket Name: " + inputS3BucketName);
-        println("Build Name: " + inputBuildName);
-        println("Build Number: " + inputBuildNumber);
         this.deployBuild(
             inputNodeName,
             inputEnvironment,
