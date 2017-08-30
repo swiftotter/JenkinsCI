@@ -7,11 +7,13 @@ def call(body) {
     println env.BRANCH_NAME
     println BRANCH_NAME
     
-    println config.toString()
-    println config.devDeployTargets.toString()
-    println config.prodDeployTargets.toString()
+    if (!config.primaryBranch) {
+        primaryBranch = "master"   
+    } else {
+        primaryBranch  = config.primaryBranch   
+    }
     
-    if (env.BRANCH_NAME != "master") {
+    if (env.BRANCH_NAME != primaryBranch) {
         println "About to run tests:"
         if (!binding.variables['SKIP_TEST'] || params.SKIP_TEST != true) {
             println "Running tests..."
