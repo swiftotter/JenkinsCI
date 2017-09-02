@@ -70,7 +70,7 @@ package org.swiftotter
         def releaseFolder = 'releases/build-' + buildNumber
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
-            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' \'mkdir -p ' + sshPath + '\''
+            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' \'mkdir -p ' + sshPath + '/releases\''
         }
         
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
