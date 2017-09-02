@@ -70,6 +70,12 @@ package org.swiftotter
         def releaseFolder = 'releases/build-' + buildNumber
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
+            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' << EOF\n' +
+                'mkdir -p ' + sshPath
+                'EOF'
+        }
+        
+        this.executeInNode(nodeName, sshKey) { SSH_KEY ->
             sh 'scp -i ${SSH_KEY} -P ' + sshPort + ' -o StrictHostKeyChecking=no -o \'CompressionLevel 9\' -o \'IPQoS throughput\' ' + buildFile + ' ' + userHost + ':' + sshPath + '/releases/' + buildFile
         }
     }
@@ -79,7 +85,6 @@ package org.swiftotter
         def releaseFolder = 'releases/build-' + buildNumber
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
-            println SSH_KEY
             sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' << EOF\n' +
                 'mkdir -p ' + sshPath + '\n' + // try to create the path if it doesn't exist
                 'cd ' + sshPath + '\n' +
