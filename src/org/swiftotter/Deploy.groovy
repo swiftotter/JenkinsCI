@@ -53,11 +53,6 @@ package org.swiftotter
             jobName = buildName.substring(0, index)
         }
 
-        println("Job Name: " + jobName);
-        println("Node Name: " + nodeName);
-        println("S3 Bucket Name: " + s3BucketName);
-        println("Build Name: " + buildName);
-        println("Build Number: " + buildNumber);
         def buildFile = jobName + '-' + buildNumber.toString() + '.tar.gz'
 
         node (nodeName) {
@@ -86,9 +81,10 @@ package org.swiftotter
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
             println SSH_KEY
             sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' << EOF\n' +
+                'mkdir -p ' + sshPath + '\n' + // try to create the path if it doesn't exist
                 'cd ' + sshPath + '\n' +
                 'mkdir -p ' + releaseFolder + '\n' +
-                'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' -C ' + sshPath + '/' + releaseFolder + '\n' +
+                'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' --directory ' + sshPath + '/' + releaseFolder + '\n' +
                 './'+releaseFolder+'/scripts/deploy.sh --build ' + buildNumber + ' --magentoVersion ' + magentoVersion + '\n' +
                 'EOF'
         }
