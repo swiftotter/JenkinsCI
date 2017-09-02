@@ -9,7 +9,12 @@ def call(String nodeName = 'build') {
         }
 
         stage ('\u267B Build') {
-            withCredentials([string(credentialsId: params.PACKAGIST, variable: 'COMPOSER_AUTH')]) {
+            composerAuth = params.PACKAGIST
+            if (!params.PACKAGIST) {
+                composerAuth = '';
+            }
+            
+            withCredentials([string(credentialsId: composerAuth variable: 'COMPOSER_AUTH')]) {
                 withEnv(["COMPOSER_AUTH=" + COMPOSER_AUTH]) {
                     sh 'rm -rf scripts'
                     sh 'git clone https://github.com/SwiftOtter/MagentoCI.git scripts'
