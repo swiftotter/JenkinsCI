@@ -14,7 +14,7 @@ def call(String nodeName = 'build') {
                 composerAuth = '';
             }
             
-            withCredentials([string(credentialsId: composerAuth variable: 'COMPOSER_AUTH')]) {
+            withCredentials([string(credentialsId: composerAuth, variable: 'COMPOSER_AUTH')]) {
                 withEnv(["COMPOSER_AUTH=" + COMPOSER_AUTH]) {
                     sh 'rm -rf scripts'
                     sh 'git clone https://github.com/SwiftOtter/MagentoCI.git scripts'
