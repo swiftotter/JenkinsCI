@@ -18,7 +18,7 @@ def call(String nodeName = 'build') {
                     sh 'sudo chmod --recursive +x scripts/'
 
                     env.PATH = "./scripts:${env.PATH}"
-                    sh 'build.sh'
+                    sh 'build.sh'   
                 }
             }
         }
