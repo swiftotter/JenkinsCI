@@ -10,7 +10,7 @@ def call(String nodeName = 'build') {
                     sh 'rm -rf scripts'
                     sh 'mkdir -p scripts'
                     dir ('scripts/') {
-                        git credentialsId: 'GitHub-Access', url: 'https://github.com/SwiftOtter/MagentoCI.git'
+                        git credentialsId: 'GitHub-Access', url: 'git@github.com:SwiftOtter/MagentoCI.git'
                     }
                     sh 'mkdir -p scripts.d'
                     sh 'ls -alh'
