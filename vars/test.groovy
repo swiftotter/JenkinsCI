@@ -10,7 +10,10 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
 
             stage ('Testing') {
                 sh 'rm -rf scripts/'
-                sh 'git clone https://github.com/SwiftOtter/Magento1CI.git scripts'
+                sh 'mkdir -p scripts'
+                dir ('scripts/') {
+                    git credentialsId: 'GitHub-Access', url: 'git@github.com:SwiftOtter/MagentoCI.git'
+                }
 
                 sh 'sudo chmod --recursive +x scripts/'
                 withCredentials([string(credentialsId: params.PACKAGIST, variable: 'COMPOSER_AUTH')]) {
