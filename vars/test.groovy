@@ -5,7 +5,11 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
     node (nodeName) {
         withEnv(["COMPOSER_AUTH=" + composerAuth]) {
             stage ('\u26CF Checkout') {
-                checkout scm
+                sh 'mkdir -p checkout'
+            
+                dir ('checkout') {
+                    checkout scm
+                }
             }
 
             stage ('Testing') {
@@ -14,6 +18,10 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
                 dir ('scripts/') {
                     git credentialsId: 'GitHub-Access', url: 'git@github.com:SwiftOtter/MagentoCI.git'
                 }
+                
+                sh 'mkdir -p checkout/scripts.d'
+                sh 'ls -alh'
+                sh 'cp --recursive --backup --force "checkout/scripts.d/." scripts'
 
                 sh 'sudo chmod --recursive +x scripts/'
                 withCredentials([string(credentialsId: params.PACKAGIST, variable: 'COMPOSER_AUTH')]) {
