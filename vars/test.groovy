@@ -19,8 +19,7 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
                 withCredentials([string(credentialsId: params.PACKAGIST, variable: 'COMPOSER_AUTH')]) {
                     withCredentials([string(credentialsId: params.CRYPT_KEY, variable: 'CRYPT_KEY')]) {
                         println 'Running: sh scripts/test.sh'+' -i '+env.BUILD_NUMBER+' -c '+params.CRYPT_KEY+' -t '+params.TABLE_PREFIX+' -b '+params.S3_DB_BUCKET+' -p . -f '+params.S3_DB_FILE
-                        sh 'scripts/test.sh --magentoVersion ' + params.MAGENTO_VERSION + ' --theme ' + params.THEME + ' --buildId ' + BUILD_NUMBER 
-                        + ' -c '+params.CRYPT_KEY+' -t '+params.TABLE_PREFIX+' -b '+params.S3_DB_BUCKET+' -p . -f '+params.S3_DB_FILE
+                        sh 'scripts/test.sh --magentoVersion ' + params.MAGENTO_VERSION + ' --theme ' + params.THEME + ' --buildId ' + BUILD_NUMBER + ' --cryptKey '+params.CRYPT_KEY+' --tablePrefix '+params.TABLE_PREFIX+' --s3Bucket '+params.S3_DB_BUCKET+' --filePath . --dbFile '+params.S3_DB_FILE
                     }
                 }
             }
