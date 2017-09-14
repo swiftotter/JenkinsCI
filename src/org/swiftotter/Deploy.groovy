@@ -21,6 +21,7 @@ package org.swiftotter
             details.sshPort,
             details.sshKey,
             details.sshPath,
+            details.httpPath ?: "",
             inputOutputFile,
             inputMagentoVersion
         )
@@ -37,13 +38,14 @@ package org.swiftotter
         String sshPort,
         String sshKey,
         String sshPath,
+        String httpPath,
         String outputFile,
         String magentoVersion
     ) {
         buildFile = this.downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
 
         this.pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
-        this.deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber, magentoVersion)
+        this.deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, httpPath, buildFile, buildNumber, magentoVersion)
     }
 
     def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String buildName, String buildNumber, String outputFile) {
@@ -78,7 +80,7 @@ package org.swiftotter
         }
     }
 
-    def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshPort, String sshKey, String sshPath, String buildFile, String buildNumber, magentoVersion) {
+    def deployArtifactOnServer(String nodeName = 'deploy', String sshUser, String sshHost, String sshPort, String sshKey, String sshPath, String httpPath, String buildFile, String buildNumber, magentoVersion) {
         def userHost = sshUser + '@' + sshHost
         def releaseFolder = 'releases/build-' + buildNumber
 
@@ -88,7 +90,7 @@ package org.swiftotter
                 'cd ' + sshPath + '\n' +
                 'mkdir -p ' + releaseFolder + '\n' +
                 'tar --extract --gzip --mode 777 --touch --no-overwrite-dir --file releases/' + buildFile + ' --directory ' + sshPath + '/' + releaseFolder + '\n' +
-                './'+releaseFolder+'/scripts/deploy.sh --build ' + buildNumber + ' --magentoVersion ' + magentoVersion + '\n' +
+                './'+releaseFolder+'/scripts/deploy.sh --build ' + buildNumber + ' --magentoVersion ' + magentoVersion + ' --httpPath ' + httpPath + '\n' +
                 'EOF'
         }
     }
