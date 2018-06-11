@@ -42,10 +42,12 @@ package org.swiftotter
         String outputFile,
         String magentoVersion
     ) {
-        buildFile = this.downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
+        withEnv(["PATH+reset=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/aws/bin:/home/ec2-user/.local/bin:/home/ec2-user/bin:/opt/aws/bin"]) {
+            buildFile = this.downloadArtifactFromS3Bucket(nodeName, s3BucketName, buildName, buildNumber, outputFile)
 
-        this.pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
-        this.deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, httpPath, buildFile, buildNumber, magentoVersion)
+            this.pushArtifactToDeployServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, buildFile, buildNumber)
+            this.deployArtifactOnServer(nodeName, sshUser, sshHost, sshPort, sshKey, sshPath, httpPath, buildFile, buildNumber, magentoVersion)
+        }
     }
 
     def downloadArtifactFromS3Bucket(String nodeName, String s3BucketName, String buildName, String buildNumber, String outputFile) {
