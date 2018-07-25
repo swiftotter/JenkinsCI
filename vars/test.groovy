@@ -37,7 +37,7 @@ def call(String nodeName = 'test', String composerAuth = 'unset') {
             }
 
             stage('\u2795 Pushing Artifacts') {
-                archive "output/*"
+                archiveArtifacts "output/*"
                 junit "output/*.xml"
             }
         }
