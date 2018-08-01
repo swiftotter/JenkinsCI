@@ -74,7 +74,7 @@ package org.swiftotter
         def releaseFolder = 'releases/build-' + buildNumber
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
-            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' -vvv \'mkdir -p ' + sshPath + '/releases\''
+            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' \'mkdir -p ' + sshPath + '/releases\''
         }
         
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
@@ -87,7 +87,7 @@ package org.swiftotter
         def releaseFolder = 'releases/build-' + buildNumber
 
         this.executeInNode(nodeName, sshKey) { SSH_KEY ->
-            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' -vvv << EOF\n' +
+            sh 'ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no -p ' + sshPort + ' ' + userHost + ' << EOF\n' +
                 'mkdir -p ' + sshPath + '\n' + // try to create the path if it doesn't exist
                 'cd ' + sshPath + '\n' +
                 'mkdir -p ' + releaseFolder + '\n' +
